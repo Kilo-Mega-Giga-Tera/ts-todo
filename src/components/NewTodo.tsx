@@ -1,6 +1,8 @@
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
+import { TodoContext } from "../store/todo-context.tsx";
 
-const NewTodo = ({ onAddTodo }: { onAddTodo: (text: string) => void }) => {
+const NewTodo = () => {
+  const todoCtx = useContext(TodoContext);
   const todoTextInputRef = useRef<HTMLInputElement>(null);
 
   const onSubmitHandler = (event: React.FormEvent) => {
@@ -11,7 +13,7 @@ const NewTodo = ({ onAddTodo }: { onAddTodo: (text: string) => void }) => {
       return;
     }
 
-    onAddTodo(enteredText);
+    todoCtx.add(enteredText);
     todoTextInputRef.current!.value = "";
   };
 

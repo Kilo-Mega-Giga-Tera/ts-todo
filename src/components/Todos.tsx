@@ -1,16 +1,17 @@
 import TodoItems from "./TodoItems.tsx";
-import TodoData from "../model/TodoData.ts";
+import { useContext } from "react";
+import { TodoContext } from "../store/todo-context.tsx";
 
-type TodosProps = {
-  items: TodoData[];
-  onRemoveTodo: (id: string) => void;
-};
-
-const Todos = ({ items, onRemoveTodo }: TodosProps) => {
+const Todos = () => {
+  const todoCtx = useContext(TodoContext);
   return (
     <ul className="flex flex-col gap-2 cursor-pointer">
-      {items.map((item) => (
-        <TodoItems key={item.id} item={item} onRemoveTodo={onRemoveTodo} />
+      {todoCtx.items.map((item) => (
+        <TodoItems
+          key={item.id}
+          item={item}
+          onClick={() => todoCtx.remove(item.id)}
+        />
       ))}
     </ul>
   );
